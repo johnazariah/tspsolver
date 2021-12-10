@@ -8,13 +8,18 @@
   <ItemGroup>
     <Compile Include="Domain.fs" />
     <Compile Include="Parser.fs" />
-    <None Include="Parser.fsx" />
+    <Compile Include="UntypedBRKGA.fs" />
+    <Compile Include="TSPBRKGA.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.1.1" />
-    <PackageReference Include="FsToolkit.ErrorHandling" Version="2.11.0" />
+    <PackageReference Include="FsToolkit.ErrorHandling" Version="2.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.2-beta.21604.1" />
   </ItemGroup>
 
 </Project>

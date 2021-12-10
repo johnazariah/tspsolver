@@ -1,4 +1,8 @@
-﻿open TSPSolver.TSPParser
+﻿
+open TSPParser
+open UntypedBRKGA
+
+open FsToolkit.ErrorHandling
 
 let dataRoot = @"C:\code\TSP\tspsolver\data\tsplib95"
 let input =
@@ -6,5 +10,19 @@ let input =
     |> System.IO.Path.Combine
     |> System.IO.File.ReadAllText
 
-parseTextToProblem input
-|> printfn "%O"
+option {
+    let! wcg = parseTextToWeightedCompleteGraph input
+    let pp =
+        {
+            ChromosomeLength = ChromosomeLength wcg.Dimension.unapply
+            InitialPopulationCount = PopulationCount (wcg.Dimension.unapply * 2)
+            EncodeFunction = TSPBRKGA.encodeTSP
+            DecodeFunction = TSPBRKGA.decodeTSP
+            FitnessFunction = TSPBRKGA.fitnessTSP wcg
+        }
+    let ep = EvolutionParameters.Default
+    do UntypedBRKGA.Solve ("TSP") pp ep 20_000
+
+    TSPBRKGA.fitnessTSP wcg TSPBRKGA.referenceBestTour
+    |> printfn "The Reference Best Tour had Fitness of %O"
+} |> ignore
