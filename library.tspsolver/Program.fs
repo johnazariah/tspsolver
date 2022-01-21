@@ -4,7 +4,7 @@ open UntypedBRKGA
 
 open FsToolkit.ErrorHandling
 
-let dataRoot = @"C:\code\TSP\tspsolver\data\tsplib95"
+let dataRoot = $@"{__SOURCE_DIRECTORY__}/../data/tsplib95"
 let input =
     [| dataRoot; "att48.tsp" |]
     |> System.IO.Path.Combine
